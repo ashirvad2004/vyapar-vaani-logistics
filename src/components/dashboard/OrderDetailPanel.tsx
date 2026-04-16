@@ -1,15 +1,10 @@
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { StatusBadge } from "./StatusBadge";
 import { useSeller, useBuyer, useUpdateStatus } from "@/hooks/use-orders";
 import type { Order, OrderStatus } from "@/types/logistics";
-import { User, Phone, MapPin, Package, ArrowRight } from "lucide-react";
-
-interface OrderDetailPanelProps {
-  order: Order | null;
-  onAssignAgent: () => void;
-}
+import { User, Phone, MapPin, Package, ArrowRight, Truck } from "lucide-react";
 
 const STATUS_FLOW: { from: OrderStatus; to: OrderStatus; label: string }[] = [
   { from: "pending", to: "pickup_scheduled", label: "Assign Pickup" },
@@ -49,7 +44,10 @@ function PersonCard({ title, name, phone, address, isLoading }: {
   );
 }
 
-export function OrderDetailPanel({ order, onAssignAgent }: OrderDetailPanelProps) {
+export function OrderDetailPanel({ order, onAssignAgent }: {
+  order: Order | null;
+  onAssignAgent: () => void;
+}) {
   const { data: seller, isLoading: sellerLoading } = useSeller(order?.seller_id);
   const { data: buyer, isLoading: buyerLoading } = useBuyer(order?.buyer_id);
   const updateStatus = useUpdateStatus();
@@ -68,7 +66,6 @@ export function OrderDetailPanel({ order, onAssignAgent }: OrderDetailPanelProps
 
   return (
     <div className="space-y-4">
-      {/* Order header */}
       <div className="flex items-start justify-between">
         <div>
           <p className="text-xs text-muted-foreground font-mono">{order.id}</p>
@@ -80,7 +77,6 @@ export function OrderDetailPanel({ order, onAssignAgent }: OrderDetailPanelProps
         <StatusBadge status={order.status} />
       </div>
 
-      {/* People */}
       <div className="grid grid-cols-1 gap-4">
         <Card className="border-dashed">
           <CardContent className="pt-4 pb-4 px-4">
@@ -107,7 +103,6 @@ export function OrderDetailPanel({ order, onAssignAgent }: OrderDetailPanelProps
         </Card>
       </div>
 
-      {/* Actions */}
       <div className="space-y-2 pt-2">
         {order.status !== "delivered" && !order.assigned_agent_id && (
           <Button onClick={onAssignAgent} variant="outline" className="w-full">
@@ -132,6 +127,3 @@ export function OrderDetailPanel({ order, onAssignAgent }: OrderDetailPanelProps
     </div>
   );
 }
-
-// Need Truck import
-import { Truck } from "lucide-react";
