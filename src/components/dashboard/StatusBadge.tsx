@@ -8,13 +8,13 @@ const STATUS_CONFIG: Record<string, { label: string; className: string; dot: str
     className: "bg-warning/15 text-warning-foreground border-warning/30",
     dot: "bg-warning",
   },
-  PICKUP_SCHEDULED: {
-    label: "Pickup Scheduled",
+  PICKUP_PLANNED: {
+    label: "Pickup Planned",
     className: "bg-info/15 text-info border-info/30",
     dot: "bg-info",
   },
-  OUT_FOR_DELIVERY: {
-    label: "Out for Delivery",
+  PICKED: {
+    label: "Picked",
     className: "bg-primary/15 text-primary border-primary/30",
     dot: "bg-primary",
   },

@@ -1,5 +1,5 @@
 import axios from "axios";
-import type { Product, Order, BuyPayload } from "@/types/logistics";
+import type { Product, Order, BuyPayload, OrderStatus, Notification } from "@/types/logistics";
 
 const API_BASE_URL =
   import.meta.env.VITE_API_BASE_URL || "https://vyapar-vaani.onrender.com";
@@ -20,6 +20,27 @@ export const fetchProducts = async (): Promise<Product[]> => {
 export const placeBuyOrder = async (payload: BuyPayload): Promise<Order> => {
   const { data } = await api.post("/buy", payload);
   return data.order;
+};
+
+// Logistics: fetch all orders
+export const fetchOrders = async (): Promise<Order[]> => {
+  const { data } = await api.get("/orders");
+  return Array.isArray(data) ? data : [];
+};
+
+// Logistics: update order status (also creates seller notification on backend)
+export const updateOrderStatus = async (
+  id: string,
+  status: OrderStatus,
+): Promise<Order> => {
+  const { data } = await api.patch(`/orders/${id}/status`, { status });
+  return data;
+};
+
+// Seller notifications (chat updates)
+export const fetchNotifications = async (sellerId: string): Promise<Notification[]> => {
+  const { data } = await api.get(`/notifications/${sellerId}`);
+  return Array.isArray(data) ? data : [];
 };
 
 export { api, API_BASE_URL };

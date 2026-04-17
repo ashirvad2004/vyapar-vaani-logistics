@@ -8,7 +8,7 @@ export interface Product {
   createdAt: string;
 }
 
-export type OrderStatus = "PLACED" | "PICKUP_SCHEDULED" | "OUT_FOR_DELIVERY" | "DELIVERED";
+export type OrderStatus = "PLACED" | "PICKUP_PLANNED" | "PICKED" | "DELIVERED";
 
 export interface Order {
   _id: string;
@@ -28,4 +28,12 @@ export interface BuyPayload {
   buyerName: string;
   phone: string;
   address: string;
+}
+
+export interface Notification {
+  _id: string;
+  sellerId: string;
+  orderId: string;
+  message: string;
+  createdAt: string;
 }

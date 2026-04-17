@@ -7,7 +7,6 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import { usePlaceOrder } from "@/hooks/use-orders";
-import { useLocalOrders } from "@/hooks/use-local-orders";
 import type { Product } from "@/types/logistics";
 import { toast } from "sonner";
 
@@ -21,7 +20,6 @@ export function BuyDialog({ product, onClose }: BuyDialogProps) {
   const [phone, setPhone] = useState("");
   const [address, setAddress] = useState("");
   const placeOrder = usePlaceOrder();
-  const { addOrder } = useLocalOrders();
 
   useEffect(() => {
     if (product) {
@@ -41,7 +39,6 @@ export function BuyDialog({ product, onClose }: BuyDialogProps) {
         phone,
         address,
       });
-      addOrder(order);
       toast.success("Order placed", {
         description: `${order.productName} → logistics queue`,
       });
