@@ -33,6 +33,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { title: "Vyapar Vaani — Logistics Dashboard" },
       { name: "description", content: "Real-time logistics management for rural commerce" },
       { name: "author", content: "Vyapar Vaani" },
+      { property: "og:title", content: "Vyapar Vaani — Logistics Dashboard" },
+      { name: "twitter:title", content: "Vyapar Vaani — Logistics Dashboard" },
+      { property: "og:description", content: "Real-time logistics management for rural commerce" },
+      { name: "twitter:description", content: "Real-time logistics management for rural commerce" },
+      { name: "twitter:card", content: "summary" },
+      { property: "og:type", content: "website" },
     ],
     links: [
       { rel: "stylesheet", href: appCss },
