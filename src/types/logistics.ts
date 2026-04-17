@@ -1,51 +1,31 @@
-export interface Order {
-  id: string;
-  product_name: string;
-  product_quantity: number;
-  product_price: number;
-  seller_id: string;
-  buyer_id: string;
-  status: OrderStatus;
-  assigned_agent_id?: string;
-  created_at?: string;
-  updated_at?: string;
+export interface Product {
+  _id: string;
+  sellerId: string;
+  name: string;
+  quantity: string;
+  suggestedPrice: string;
+  status: string;
+  createdAt: string;
 }
 
-export type OrderStatus =
-  | "pending"
-  | "pickup_scheduled"
-  | "out_for_delivery"
-  | "delivered";
+export type OrderStatus = "PLACED" | "PICKUP_SCHEDULED" | "OUT_FOR_DELIVERY" | "DELIVERED";
 
-export interface Seller {
-  id: string;
-  name: string;
+export interface Order {
+  _id: string;
+  productId: string;
+  productName: string;
+  quantity: string;
+  sellerId: string;
+  buyerName: string;
   phone: string;
   address: string;
+  status: OrderStatus | string;
+  createdAt: string;
 }
 
-export interface Buyer {
-  id: string;
-  name: string;
-  contact: string;
-  delivery_address: string;
-  ordered_quantity?: number;
-  final_price?: number;
-}
-
-export interface DeliveryAgent {
-  id: string;
-  name: string;
-  contact: string;
-  availability: "available" | "busy" | "offline";
-}
-
-export interface AssignDeliveryPayload {
-  order_id: string;
-  agent_id: string;
-}
-
-export interface UpdateStatusPayload {
-  order_id: string;
-  status: OrderStatus;
+export interface BuyPayload {
+  productId: string;
+  buyerName: string;
+  phone: string;
+  address: string;
 }

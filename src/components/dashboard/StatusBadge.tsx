@@ -2,35 +2,34 @@ import { Badge } from "@/components/ui/badge";
 import type { OrderStatus } from "@/types/logistics";
 import { cn } from "@/lib/utils";
 
-const STATUS_CONFIG: Record<OrderStatus, { label: string; className: string }> = {
-  pending: {
-    label: "Pending",
+const STATUS_CONFIG: Record<string, { label: string; className: string; dot: string }> = {
+  PLACED: {
+    label: "Placed",
     className: "bg-warning/15 text-warning-foreground border-warning/30",
+    dot: "bg-warning",
   },
-  pickup_scheduled: {
+  PICKUP_SCHEDULED: {
     label: "Pickup Scheduled",
     className: "bg-info/15 text-info border-info/30",
+    dot: "bg-info",
   },
-  out_for_delivery: {
+  OUT_FOR_DELIVERY: {
     label: "Out for Delivery",
     className: "bg-primary/15 text-primary border-primary/30",
+    dot: "bg-primary",
   },
-  delivered: {
+  DELIVERED: {
     label: "Delivered",
     className: "bg-success/15 text-success border-success/30",
+    dot: "bg-success",
   },
 };
 
-export function StatusBadge({ status }: { status: OrderStatus }) {
-  const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.pending;
+export function StatusBadge({ status }: { status: OrderStatus | string }) {
+  const config = STATUS_CONFIG[status] ?? STATUS_CONFIG.PLACED;
   return (
     <Badge variant="outline" className={cn("font-medium text-xs", config.className)}>
-      <span className={cn("mr-1.5 inline-block h-1.5 w-1.5 rounded-full", {
-        "bg-warning": status === "pending",
-        "bg-info": status === "pickup_scheduled",
-        "bg-primary": status === "out_for_delivery",
-        "bg-success": status === "delivered",
-      })} />
+      <span className={cn("mr-1.5 inline-block h-1.5 w-1.5 rounded-full", config.dot)} />
       {config.label}
     </Badge>
   );

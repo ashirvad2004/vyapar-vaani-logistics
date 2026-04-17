@@ -1,4 +1,4 @@
-import { Package, Truck, Users, LayoutDashboard, Settings } from "lucide-react";
+import { Package, Store, LayoutDashboard, Settings } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 interface SidebarProps {
@@ -10,8 +10,8 @@ interface SidebarProps {
 
 const NAV_ITEMS = [
   { id: "overview", label: "Overview", icon: LayoutDashboard },
+  { id: "marketplace", label: "Marketplace", icon: Store },
   { id: "orders", label: "Orders", icon: Package },
-  { id: "agents", label: "Delivery Agents", icon: Truck },
 ];
 
 export function DashboardSidebar({ activeTab, onTabChange, collapsed, onToggle }: SidebarProps) {
