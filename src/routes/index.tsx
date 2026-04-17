@@ -6,8 +6,7 @@ import { ProductsTable } from "@/components/dashboard/ProductsTable";
 import { OrdersTable } from "@/components/dashboard/OrdersTable";
 import { OverviewPanel } from "@/components/dashboard/OverviewPanel";
 import { BuyDialog } from "@/components/dashboard/BuyDialog";
-import { useProducts } from "@/hooks/use-orders";
-import { useLocalOrders } from "@/hooks/use-local-orders";
+import { useProducts, useOrders } from "@/hooks/use-orders";
 import type { Product } from "@/types/logistics";
 
 export const Route = createFileRoute("/")({
@@ -31,8 +30,12 @@ function Dashboard() {
   const [collapsed, setCollapsed] = useState(false);
   const [buyingProduct, setBuyingProduct] = useState<Product | null>(null);
 
-  const { data: products, isLoading, isError } = useProducts();
-  const { orders } = useLocalOrders();
+  const { data: products, isLoading: productsLoading, isError: productsError } = useProducts();
+  const {
+    data: orders = [],
+    isLoading: ordersLoading,
+    isError: ordersError,
+  } = useOrders();
 
   return (
     <div className="flex h-screen overflow-hidden">
@@ -57,14 +60,22 @@ function Dashboard() {
         <div className="flex-1 overflow-auto p-6">
           {activeTab === "overview" && (
             <div className="space-y-6">
-              <OverviewPanel products={products} orders={orders} isLoading={isLoading} />
+              <OverviewPanel
+                products={products}
+                orders={orders}
+                isLoading={productsLoading || ordersLoading}
+              />
 
               <Card>
                 <CardHeader className="pb-3">
                   <CardTitle className="font-display text-base">Recent Orders</CardTitle>
                 </CardHeader>
                 <CardContent className="px-0">
-                  <OrdersTable orders={orders.slice(0, 5)} />
+                  <OrdersTable
+                    orders={orders.slice(0, 5)}
+                    isLoading={ordersLoading}
+                    isError={ordersError}
+                  />
                 </CardContent>
               </Card>
 
@@ -75,8 +86,8 @@ function Dashboard() {
                 <CardContent className="px-0">
                   <ProductsTable
                     products={products?.slice(0, 5)}
-                    isLoading={isLoading}
-                    isError={isError}
+                    isLoading={productsLoading}
+                    isError={productsError}
                     onBuy={setBuyingProduct}
                   />
                 </CardContent>
@@ -92,8 +103,8 @@ function Dashboard() {
               <CardContent className="px-0">
                 <ProductsTable
                   products={products}
-                  isLoading={isLoading}
-                  isError={isError}
+                  isLoading={productsLoading}
+                  isError={productsError}
                   onBuy={setBuyingProduct}
                 />
               </CardContent>
@@ -108,7 +119,11 @@ function Dashboard() {
                 </CardTitle>
               </CardHeader>
               <CardContent className="px-0">
-                <OrdersTable />
+                <OrdersTable
+                  orders={orders}
+                  isLoading={ordersLoading}
+                  isError={ordersError}
+                />
               </CardContent>
             </Card>
           )}

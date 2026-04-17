@@ -38,7 +38,7 @@ export function OverviewPanel({ products, orders, isLoading }: OverviewPanelProp
     {
       label: "In Transit",
       value: orders.filter(
-        (o) => o.status === "PICKUP_SCHEDULED" || o.status === "OUT_FOR_DELIVERY"
+        (o) => o.status === "PICKUP_PLANNED" || o.status === "PICKED"
       ).length,
       icon: Truck,
       color: "text-info",
